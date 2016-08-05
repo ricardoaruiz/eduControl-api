@@ -71,7 +71,6 @@ LivroDAO.prototype._getListarQuery = function(filtro, count) {
         if(filtro.pagina > 0 ) filtro.pagina = parseInt(filtro.pagina) * parseInt(filtro.regPorPagina);
         sql += ' LIMIT ' + filtro.pagina + ',' + filtro.regPorPagina;
     }
-    console.log(sql);
 
     return sql;
 

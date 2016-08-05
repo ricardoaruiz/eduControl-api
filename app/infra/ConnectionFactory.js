@@ -12,12 +12,14 @@ var object = {
         }
 
         if(process.env.NODE_ENV === 'production') {
-            console.log('production');
+            var urlConexao = process.env.CLEARDB_DATABASE_URL;
+            var grupos = urlConexao.match(/mysql:\/\/(.*):(.*)@(.*)\/(.*)\?reconnect=true/);
             return mysql.createConnection({
-                user : 'b02e0832da6d1d',
-                password: '65912b5a',
-                host : 'us-cdbr-iron-east-04.cleardb.net',
-                database : 'heroku_bf2733d210a0d62'
+                user : grupos[1],
+                password : grupos[2],
+                host : grupos[3],
+                database : grupos[4],
+                debug : false
             });
         } 
 
