@@ -7,7 +7,9 @@ module.exports = function(app) {
         var filtro = {
             titulo : req.query.titulo,
             descricao : req.query.descricao,
-            preco : req.query.preco
+            preco : req.query.preco,
+            regPorPagina : req.query.regPorPagina,
+            pagina : req.query.pagina            
         }
 
         livroService.listar(filtro)
@@ -17,7 +19,32 @@ module.exports = function(app) {
         .catch(function(error) {
             res.status(500).send();
         });
-    });  
+    });
+
+    app.get('/livros/tot', function(req, res) {
+
+        var filtro = {
+            titulo : req.query.titulo,
+            descricao : req.query.descricao,
+            preco : req.query.preco,
+            regPorPagina : req.query.regPorPagina,
+            pagina : req.query.pagina
+        }
+
+        livroService.paginacao(filtro)
+        .then(function(result) {
+
+            result[0].regPorPagina = parseInt(req.query.regPorPagina);
+            result[0].paginas = Math.ceil(result[0].registros / result[0].regPorPagina);
+
+            console.log(result[0]);
+
+            res.status(200).json(result[0]);
+        })
+        .catch(function(error) {
+            res.status(500).send();
+        });
+    });      
 
     app.post('/livros', function(req, res) {
 
