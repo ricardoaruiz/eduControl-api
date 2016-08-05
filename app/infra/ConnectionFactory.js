@@ -12,6 +12,7 @@ var object = {
         }
 
         if(process.env.NODE_ENV === 'production') {
+            console.log('production');
             return mysql.createConnection({
                 user : 'b02e0832da6d1d',
                 password: '65912b5a',
